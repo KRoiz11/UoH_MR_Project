@@ -67,18 +67,17 @@ public class RetailLayoutSpawner : MonoBehaviour
             surfaceTop = anchor.transform.position + anchor.transform.up * 0.4f;
         }
 
-        Quaternion spawnRot = anchor.transform.rotation * Quaternion.Euler(90, 0, 0);
+        //Quaternion spawnRot = anchor.transform.rotation * Quaternion.Euler(90, 0, 0);
 
-        GameObject obj = Instantiate(prefab, surfaceTop, spawnRot);
-        obj.transform.SetParent(anchor.transform);
+        GameObject obj = Instantiate(prefab, surfaceTop, Quaternion.Euler(0, 0, 0));
+        obj.transform.SetPositionAndRotation(anchor.transform.position, Quaternion.Euler(0, 90, 0));
 
         // Scale shelf to match the actual desk width
-        if (anchor.VolumeBounds.HasValue)
-        {
-            float deskWidth = anchor.VolumeBounds.Value.size.x;
-            float deskDepth = anchor.VolumeBounds.Value.size.z;
-            //obj.transform.localScale = new Vector3(deskWidth, obj.transform.localScale.y, deskDepth);
-        }
+        //if (anchor.VolumeBounds.HasValue)
+        //{
+        //    GetWorldTableDimensions(anchor, out float deskWidth, out float deskDepth);
+        //    obj.transform.localScale = new Vector3(deskWidth * (1f / obj.transform.localScale.z), obj.transform.localScale.y, deskDepth * (1f / obj.transform.localScale.z));
+        //}
     }
 
     void SpawnOnWall(GameObject prefab, MRUKAnchor anchor)
@@ -97,5 +96,30 @@ public class RetailLayoutSpawner : MonoBehaviour
             float wallHeight = anchor.PlaneRect.Value.height;
             obj.transform.localScale = new Vector3(wallWidth * 0.4f, wallHeight * 0.2f, 1f);
         }
+    }
+
+    void GetWorldTableDimensions(MRUKAnchor anchor, out float worldWidth, out float worldDepth)
+    {
+        worldWidth = 1.5f; 
+        worldDepth = 0.6f;
+
+        if (!anchor.VolumeBounds.HasValue) return;
+
+        Bounds b = anchor.VolumeBounds.Value;
+
+        // Transform all 4 top-face corners into world space
+        Vector3 c0 = anchor.transform.TransformPoint(new Vector3(b.min.x, b.max.y, b.min.z));
+        Vector3 c1 = anchor.transform.TransformPoint(new Vector3(b.max.x, b.max.y, b.min.z));
+        Vector3 c2 = anchor.transform.TransformPoint(new Vector3(b.min.x, b.max.y, b.max.z));
+        Vector3 c3 = anchor.transform.TransformPoint(new Vector3(b.max.x, b.max.y, b.max.z));
+
+        // Measure world X and Z extents from those corners
+        float minX = Mathf.Min(c0.x, c1.x, c2.x, c3.x);
+        float maxX = Mathf.Max(c0.x, c1.x, c2.x, c3.x);
+        float minZ = Mathf.Min(c0.z, c1.z, c2.z, c3.z);
+        float maxZ = Mathf.Max(c0.z, c1.z, c2.z, c3.z);
+
+        worldWidth = maxX - minX;
+        worldDepth = maxZ - minZ;
     }
 }

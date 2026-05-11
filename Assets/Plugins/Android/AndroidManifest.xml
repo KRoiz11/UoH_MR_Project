@@ -26,4 +26,5 @@
   <uses-permission android:name="com.oculus.permission.RENDER_MODEL" />
   <uses-feature android:name="oculus.software.trackedkeyboard" android:required="true" />
   <uses-permission android:name="com.oculus.permission.TRACKED_KEYBOARD" />
+  <uses-permission android:name="horizonos.permission.HEADSET_CAMERA" />
 </manifest>

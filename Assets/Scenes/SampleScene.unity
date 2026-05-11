@@ -1963,6 +1963,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8456867780164036831, guid: bc27452f2a258462db1585071b780a89,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456867780164036831, guid: bc27452f2a258462db1585071b780a89,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1974,7 +1979,7 @@ PrefabInstance:
     - target: {fileID: 8456867780164036831, guid: bc27452f2a258462db1585071b780a89,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.778
       objectReference: {fileID: 0}
     - target: {fileID: 8456867780164036831, guid: bc27452f2a258462db1585071b780a89,
         type: 3}
@@ -2519,7 +2524,7 @@ MonoBehaviour:
   requestEyeTrackingPermissionOnStartup: 0
   requestScenePermissionOnStartup: 1
   requestRecordAudioPermissionOnStartup: 0
-  requestPassthroughCameraAccessPermissionOnStartup: 0
+  requestPassthroughCameraAccessPermissionOnStartup: 1
   _localDimming: 1
   _trackingOriginType: 1
   usePositionTracking: 1
